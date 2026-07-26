@@ -13,7 +13,7 @@ def handler(event, context):
 
         # 2. Ange vilken modell vi vill prata med (Claude 3 Haiku)
         #model_id = "anthropic.claude-3-haiku-20240307-v1:0"
-        model_id = "anthropic.claude-3-5-sonnet-20240620-v1:0"
+        model_id = "eu.anthropic.claude-3-5-sonnet-20240620-v1:0"
         # 3. Strukturera anropet enligt Anthropics gällande format
         native_request = {
             "anthropic_version": "bedrock-2023-05-31",
