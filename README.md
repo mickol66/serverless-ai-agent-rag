@@ -5,7 +5,6 @@ A production-grade, highly secure, and fully serverless AI orchestration backend
 ## 🏗️ Architecture & AI Orchestration Overview
 ![AWS Architecture Diagram](ai_diagram.png)
 _Architecture diagram automated and generated using **AWS Kiro CLI** and **Model Context Protocol (MCP)**._
-
 This system completely eliminates the need for expensive, 24/7 idle compute resources by adopting a **100% Serverless Pay-per-Use** financial lifecycle.
 
 *   **API Gateway Ingestion Layer:** Exposes a secure REST endpoint (`/ask`) with pre-configured Cross-Origin Resource Sharing (CORS) to allow immediate integration with personal portfolio frontends.
