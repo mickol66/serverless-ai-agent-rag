@@ -1,43 +1,45 @@
 import json
 import boto3
-import os
 
-# Initiera Bedrock-klienten utanför handlern (eu-north-1)
-bedrock_client = boto3.client(service_name="bedrock-runtime", region_name="eu-north-1")
+# Initiera Bedrock-klienterna i Stockholm
+bedrock_client = boto3.client(service_name="bedrock", region_name="eu-north-1")
+bedrock_runtime = boto3.client(service_name="bedrock-runtime", region_name="eu-north-1")
 
 def handler(event, context):
     try:
+        # LOGGNING FÖR ATT HITTA RÄTT ID:
+        # Vi listar alla tillgängliga modeller i ditt konto och skriver ut i CloudWatch
+        print("🔍 Listing all available foundation models in eu-north-1:")
+        models = bedrock_client.list_foundation_models()
+        for model in models.get('modelSummaries', []):
+            if 'anthropic' in model.get('modelId', ''):
+                print(f"-> Giltigt ID: {model.get('modelId')} (Status: {model.get('modelLifecycle', {}).get('status')})")
+
+        # Hämta frågan från API Gateway
         body = json.loads(event.get("body", "{}"))
         user_question = body.get("question", "Hello! Who are you?")
 
-        # 1. DET OFFICIELLA OCH SKOTTSÄKRA MODELL-ID:T FÖR CLAUDE 3.5 SONNET I EUROPA
-        # Detta är den universella sträng som AWS STS och Bedrock garanterat känner igen i eu-north-1
-        model_id = "eu.anthropic.claude-3-5-sonnet-20240620-v1:0"
-        
-        # 2. Strukturera anropet enligt Anthropics stabila standardformat
-        native_request = {
-            "anthropic_version": "bedrock-2023-05-31", # Stabilt bas-datum för Claude 3/3.5
-            "max_tokens": 512,
-            "temperature": 0.5,
-            "messages": [
+        # Vi testar det universella och mest stabila bas-ID:t för Claude 3 Haiku
+        model_id = "anthropic.claude-3-haiku-20240307-v1:0"
+
+        # NYA CONVERSE API: Det moderna sättet att prata med Bedrock (ersätter invoke_model)
+        # Det hanterar payloads mycket säkrare och minskar risken för ValidationException
+        response = bedrock_runtime.converse(
+            modelId=model_id,
+            messages=[
                 {
                     "role": "user",
-                    "content": user_question
+                    "content": [{"text": user_question}]
                 }
             ],
-            "system": "You are an advanced, helpful AI Portfolio Assistant. Answer clearly and professionally."
-        }
-
-        request_body = json.dumps(native_request)
-
-        # 3. Anropa Amazon Bedrock [5.1]
-        response = bedrock_client.invoke_model(
-            modelId=model_id,
-            body=request_body
+            inferenceConfig={
+                "maxTokens": 512,
+                "temperature": 0.5
+            }
         )
 
-        response_body = json.loads(response.get("body").read())
-        ai_response_text = response_body["content"]["text"]
+        # Hämta ut textsvaret från det nya formatet
+        ai_response_text = response["output"]["message"]["content"][0]["text"]
 
         return {
             "statusCode": 200,
@@ -48,12 +50,12 @@ def handler(event, context):
             "body": json.dumps({
                 "question": user_question,
                 "answer": ai_response_text,
-                "model_used": "Anthropic Claude 3.5 Sonnet"
+                "model_used": model_id
             })
         }
 
     except Exception as e:
-        print(f"❌ Error invoking Amazon Bedrock: {str(e)}")
+        print(f"❌ Detailed Error: {str(e)}")
         return {
             "statusCode": 500,
             "headers": {

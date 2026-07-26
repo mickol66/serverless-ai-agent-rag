@@ -34,18 +34,18 @@ class ServerlessAiAgentRagStack(Stack):
             memory_size=256,              
             log_retention=logs.RetentionDays.ONE_WEEK 
         )
-
-        # 3. IAM-rättigheter för att anropa Amazon Bedrock (Least Privilege)
+        # 3. IAM-rättigheter för att anropa och lista Amazon Bedrock (Least Privilege)
         ai_backend_lambda.add_to_role_policy(iam.PolicyStatement(
             effect=iam.Effect.ALLOW,
-            actions=["bedrock:InvokeModel"],
-            resources=[
-                # Vi tillåter alla officiella Anthropic Claude-modeller samt dess europeiska profil-endpoints
-                "arn:aws:bedrock:*::foundation-model/anthropic.claude-*",
-                "arn:aws:bedrock:eu-north-1::inference-profile/*"
-            ]
+            actions=[
+                "bedrock:InvokeModel",
+                "bedrock:Converse",          # <-- LÄGG TILL DETTA FÖR DET NYA API:ET!
+                "bedrock:ListFoundationModels" # <-- LÄGG TILL DETTA FÖR FELSÖKNINGEN!
+            ],
+            resources=["*"] # För listning och regionala profiler krävs asterisk här
         ))
 
+        
         # 4. Skapa en REST API Gateway för att exponera ditt AI-API
         api = apigateway.RestApi(
             self, "AiAgentRestApi",
