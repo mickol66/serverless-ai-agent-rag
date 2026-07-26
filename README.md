@@ -3,6 +3,8 @@
 A production-grade, highly secure, and fully serverless AI orchestration backend engineered to converse with next-generation Large Language Models (LLMs) via **Amazon Bedrock**. Built entirely as Infrastructure as Code (IaC) using **AWS CDK (Python)**, this architecture deploys a cost-optimized, secure integration layer leveraging the AWS Bedrock **Converse API** [5.1].
 
 ## 🏗️ Architecture & AI Orchestration Overview
+![AWS Architecture Diagram](ai_diagram.png)
+_Architecture diagram automated and generated using **AWS Kiro CLI** and **Model Context Protocol (MCP)**._
 
 This system completely eliminates the need for expensive, 24/7 idle compute resources by adopting a **100% Serverless Pay-per-Use** financial lifecycle.
 
