@@ -14,7 +14,7 @@ def handler(event, context):
         # 2. Ange vilken modell vi vill prata med (Claude 4.5 Haiku)
         model_id = "eu.anthropic.claude-4-5-haiku-20260210-v1:0"
         
-        # 3. Strukturera anropet enligt Anthropics uppdaterade format för 2026
+       # 3. Strukturera anropet enligt Anthropics uppdaterade format för 2026
         native_request = {
             "anthropic_version": "bedrock-2026-02-10", # <-- UPPDATERAT DATUM FÖR CLAUDE 4.5!
             "max_tokens": 512,
