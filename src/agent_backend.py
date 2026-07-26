@@ -12,6 +12,7 @@ def handler(event, context):
         user_question = body.get("question", "Hello! Who are you?")
 
         # 2. Ange vilken modell vi vill prata med (Claude 3 Haiku)
+        #model_id = "anthropic.claude-3-haiku-20240307-v1:0"
         model_id = "anthropic.claude-3-haiku-20240307-v1:0"
 
         # 3. Strukturera anropet enligt Anthropics gällande format
