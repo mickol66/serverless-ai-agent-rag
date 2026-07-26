@@ -12,7 +12,7 @@ def handler(event, context):
 
         # 1. DET OFFICIELLA OCH SKOTTSÄKRA MODELL-ID:T FÖR CLAUDE 3.5 SONNET I EUROPA
         # Detta är den universella sträng som AWS STS och Bedrock garanterat känner igen i eu-north-1
-        model_id = "anthropic.claude-3-5-sonnet-20240620-v1:0"
+        model_id = "eu.anthropic.claude-3-5-sonnet-20240620-v1:0"
         
         # 2. Strukturera anropet enligt Anthropics stabila standardformat
         native_request = {
