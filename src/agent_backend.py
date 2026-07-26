@@ -21,7 +21,7 @@ def handler(event, context):
 
         # Vi testar det universella och mest stabila bas-ID:t för Claude 3 Haiku
         # model_id = "anthropic.claude-3-haiku-20240307-v1:0"
-        model_id = "anthropic.claude-haiku-4-5-20251001-v1:0"
+        model_id = "eu.anthropic.claude-haiku-4-5-20251001-v1:0"
 
         # NYA CONVERSE API: Det moderna sättet att prata med Bedrock (ersätter invoke_model)
         # Det hanterar payloads mycket säkrare och minskar risken för ValidationException
