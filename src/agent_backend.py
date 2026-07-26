@@ -11,12 +11,12 @@ def handler(event, context):
         body = json.loads(event.get("body", "{}"))
         user_question = body.get("question", "Hello! Who are you?")
 
-        # 2. Ange vilken modell vi vill prata med (Claude 3 Haiku)
-        #model_id = "anthropic.claude-3-haiku-20240307-v1:0"
+        # 2. Ange vilken modell vi vill prata med (Claude 4.5 Haiku)
         model_id = "eu.anthropic.claude-4-5-haiku-20260210-v1:0"
-        # 3. Strukturera anropet enligt Anthropics gällande format
+        
+        # 3. Strukturera anropet enligt Anthropics uppdaterade format för 2026
         native_request = {
-            "anthropic_version": "bedrock-2023-05-31",
+            "anthropic_version": "bedrock-2026-02-10", # <-- UPPDATERAT DATUM FÖR CLAUDE 4.5!
             "max_tokens": 512,
             "temperature": 0.5,
             "messages": [
@@ -51,7 +51,7 @@ def handler(event, context):
             "body": json.dumps({
                 "question": user_question,
                 "answer": ai_response_text,
-                "model_used": "Anthropic Claude 3 Haiku"
+                "model_used": "Anthropic Claude 4.5 Haiku" # <-- Snyggt uppdaterat textnamn!
             })
         }
 

@@ -40,9 +40,9 @@ class ServerlessAiAgentRagStack(Stack):
             effect=iam.Effect.ALLOW,
             actions=["bedrock:InvokeModel"],
             resources=[
-                # Begränsat till Claude 3 Haiku och Claude 3.5 Sonnet foundation-modeller
-                "arn:aws:bedrock:*::foundation-model/anthropic.claude-3-haiku-*-v1:0",
-                "arn:aws:bedrock:*::foundation-model/anthropic.claude-3-5-sonnet-*-v1:0"
+                # Vi tillåter alla officiella Anthropic Claude-modeller samt dess europeiska profil-endpoints
+                "arn:aws:bedrock:*::foundation-model/anthropic.claude-*",
+                "arn:aws:bedrock:eu-north-1::inference-profile/*"
             ]
         ))
 
