@@ -5,7 +5,7 @@ A production-grade, highly secure, and fully serverless AI orchestration backend
 ## 🏗️ Architecture & AI Orchestration Overview
 ![AWS Architecture Diagram](ai_diagram.png)
 _Architecture diagram automated and generated using **AWS Kiro CLI** and **Model Context Protocol (MCP)**._
-![AWS Architecture Diagram](ai_response.png)
+![AI Resonse](AI_response.png)
 
 
 
